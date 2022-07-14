@@ -9,13 +9,13 @@ public class Player {
     private List<Avatar> avatars;
 
 
-    //------------------------ classes -----------------------
+    //------------------------ constructors -----------------------
     public Player (){
         super();
         this.id = 0;
         this.name = "";
         this.username = "";
-        //this.avatars = new ArrayList();
+        this.avatars = avatars;
     }
 
     public Player (String username) {
@@ -23,41 +23,51 @@ public class Player {
         this.username = username;
     }
 
-    public Player (int id, String name, String username){
-        super();
-        this.id = id;
-        this.name = name;
-        this.username = username;
-        //this.avatars = new ArrayList();
-    }
+    public Player(int id, String name, String username, List<Avatar> avatars) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.username = username;
+		this.avatars = avatars;
+	}
 
     //------------------------ methods -----------------------
     @Override
-    public String toString() {
-        return "Player [id=" + id + ", name =" + name + ", username=" + username + "avatars=" + avatars + "]";
-    }
+	public String toString() {
+		return "Player [id=" + id + ", name=" + name + ", username=" + username + ", avatars=" + avatars + "]";
+	}
 
     //------------------------ getters & setters -----------------------
-    //get & set id------------------------------------------------------------------
-    public int getId(){
-        return id;
-    }
-    public void setId(int id){
-        this.id = id;
-    }
-    //get & set name------------------------------------------------------------------
-    public String getName(){
-        return name;
-    }
-    public void setName(String name){
-        this.name = name;
-    }
+	public int getId() {
+		return id;
+	}
 
-    //get & set username------------------------------------------------------------------
-    public String getUsername(){
-        return username;
-    }
-    public void setUsername(String username){
-        this.username = username;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public List<Avatar> getAvatars() {
+		return avatars;
+	}
+
+	public void setAvatars(List<Avatar> avatars) {
+		this.avatars = avatars;
+	}
+    
 }

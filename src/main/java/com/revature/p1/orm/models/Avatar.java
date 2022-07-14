@@ -1,8 +1,5 @@
 package com.revature.p1.orm.models;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Avatar {
     private int id;
     private String avatarName, gender, eyeColor, hairColor, shirtColor, pantColor;
@@ -37,26 +34,100 @@ public class Avatar {
     }
 
     //------------------------ getters & setters -----------------------
-    //get & set id------------------------------------------------------------------
-    public int getId(){
-        return id;
-    }
-    public void setId(int id){
-        this.id = id;
-    }
-    //get & set name------------------------------------------------------------------
-    public String getName(){
-        return name;
-    }
-    public void setName(String name){
-        this.name = name;
-    }
+	public int getId() {
+		return id;
+	}
 
-    //get & set username------------------------------------------------------------------
-    public String getUsername(){
-        return username;
-    }
-    public void setUsername(String username){
-        this.username = username;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
+	//-------------------------------------------------------
+	public String getAvatarName() {
+		return avatarName;
+	}
+	
+	public void setAvatarName(String avatarName) {
+		this.avatarName = avatarName;
+	}
+	//-------------------------------------------------------
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	//-------------------------------------------------------
+	public String getEyeColor() {
+		return eyeColor;
+	}
+
+	public void setEyeColor(String eyeColor) {
+		this.eyeColor = eyeColor;
+	}
+	//-------------------------------------------------------
+	public String getHairColor() {
+		return hairColor;
+	}
+
+	public void setHairColor(String hairColor) {
+		this.hairColor = hairColor;
+	}
+	//-------------------------------------------------------
+	public String getShirtColor() {
+		return shirtColor;
+	}
+
+	public void setShirtColor(String shirtColor) {
+		this.shirtColor = shirtColor;
+	}
+	//-------------------------------------------------------
+	public String getPantColor() {
+		return pantColor;
+	}
+
+	public void setPantColor(String pantColor) {
+		this.pantColor = pantColor;
+	}
+	//-------------------------------------------------------
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+	//-------------------------------------------------------
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+	//-------------------------------------------------------
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
+	}
+	//-------------------------------------------------------
+	public int getHealth() {
+		return health;
+	}
+
+	public void setHealth(int health) {
+		this.health = health;
+	}
+	//-------------------------------------------------------
+	public int getTypeId() {
+		return typeId;
+	}
+
+	public void setTypeId(int typeId) {
+		this.typeId = typeId;
+	}
+       
 }
