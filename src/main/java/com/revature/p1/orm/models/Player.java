@@ -6,7 +6,7 @@ import java.util.List;
 public class Player {
     private int id;
     private String name, username;
-    private List<Avatars> avatars;
+    private List<Avatar> avatars;
 
 
     //------------------------ classes -----------------------
@@ -15,7 +15,7 @@ public class Player {
         this.id = 0;
         this.name = "";
         this.username = "";
-        this.avatars = new ArrayList();
+        //this.avatars = new ArrayList();
     }
 
     public Player (String username) {
@@ -28,7 +28,7 @@ public class Player {
         this.id = id;
         this.name = name;
         this.username = username;
-        this.avatars = new ArrayList();
+        //this.avatars = new ArrayList();
     }
 
     //------------------------ methods -----------------------
