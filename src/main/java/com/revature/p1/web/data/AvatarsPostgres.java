@@ -1,4 +1,4 @@
-package com.revature.p1.orm.data;
+package com.revature.p1.web.data;
 
 import java.beans.Statement;
 import java.sql.Connection;

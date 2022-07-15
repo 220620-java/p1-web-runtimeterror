@@ -1,4 +1,4 @@
-package com.revature.p1.orm.models;
+package com.revature.p1.web.models;
 
 import java.util.ArrayList;
 import java.util.List;

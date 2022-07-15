@@ -1,4 +1,4 @@
-package com.revature.p1.orm.data;
+package com.revature.p1.web.data;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,10 +7,11 @@ import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.revature.p1.orm.models.Players;
-import com.revature.p1.orm.models.Avatars;
-import com.revature.p1.orm.models.AvatarTypes;
+
 import com.revature.p1.orm.utils.ConnectionUtil;
+import com.revature.p1.web.models.AvatarTypes;
+import com.revature.p1.web.models.Avatars;
+import com.revature.p1.web.models.Players;
 
 
 public class PlayersPostgres {

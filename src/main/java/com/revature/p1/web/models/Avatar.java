@@ -1,4 +1,4 @@
-package com.revature.p1.orm.models;
+package com.revature.p1.web.models;
 
 public class Avatar {
     private int id;
