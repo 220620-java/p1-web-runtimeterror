@@ -12,7 +12,7 @@ public class Trade {
 		this.trade = "archer";
 		this.skill1 = "arrow";
 		this.skill2 = "flamingarrow";
-		this.tradeHealth = 0;
+		this.tradeHealth = 100;
 		this.skill1damage = 5;
 		this.skill2damage = 8;
 	}
