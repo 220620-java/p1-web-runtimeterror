@@ -14,7 +14,7 @@ import com.revature.p1.web.models.Avatars;
 import com.revature.p1.web.models.Players;
 
 
-public class PlayersPostgres {
+public class PlayerPostgres {
 	private ConnectionUtil connUtil = ConnectionUtil.getConnectionUtil();
 
 	@Override

@@ -10,7 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 
-public class AvatarsPostgres implements AvatarsDAO{
+public class AvatarPostgres implements AvatarDAO{
 
 	@Override
 	public Avatars create(Avatars avatars) {
