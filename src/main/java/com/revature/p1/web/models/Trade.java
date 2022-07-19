@@ -23,8 +23,7 @@ public class Trade {
 		this.tradeName = tradeName;
 	}
 
-    public Trade(int id, String tradeName, String skill1, String skill2, int tradeHealth, int skill1damage,
-			int skill2damage) {
+    public Trade(int id, String tradeName, String skill1, String skill2, int tradeHealth, int skill1damage, int skill2damage) {
 		super();
 		this.id = id;
 		this.tradeName = tradeName;

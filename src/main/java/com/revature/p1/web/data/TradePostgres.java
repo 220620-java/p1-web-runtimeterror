@@ -12,10 +12,10 @@ import com.revature.p1.web.models.Avatar;
 import com.revature.p1.web.models.Trade;
 import com.revature.p1.web.utils.ConnectionUtil;
 
-public class TradePostgres {
+public abstract class TradePostgres implements TradeDAO {
 	private ConnectionUtil connUtil = ConnectionUtil.getConnectionUtil();
 	
-	@Override
+	//@Override
 	public Trade findById(int id) {
 		Trade trade = null;
 
@@ -38,6 +38,7 @@ public class TradePostgres {
 			//id, avatar_name, gender, eye_color, hair_color, shirt_color,
 			//pant_color, height, age, level, health
 			if (resultSet.next()) {
+				int tradeId = resultSet.getInt("id");
 				String tradeName = resultSet.getString("trade_name");
 				String skill1 = resultSet.getString("skill1");
 				String skill2 = resultSet.getString("skill2");
@@ -45,7 +46,7 @@ public class TradePostgres {
 				int skill1damage = resultSet.getInt("skill1damage");
 				int skill2damage = resultSet.getInt("skill2damage");
 				
-				trade = new Trade(id, tradeName, tradeHealth, skill1, skill1damage, skill2, skill2damage);
+				trade = new Trade(tradeId, tradeName, skill2, skill1, tradeHealth, skill1damage, skill2damage);
 			}
 
 		} catch (SQLException e) {
@@ -56,7 +57,7 @@ public class TradePostgres {
 
 	}
 
-	@Override
+	//@Override
 	public List<Trade> findAll() {
 		List<Trade> trades = new ArrayList<>();
 		Trade trade = new Trade();
@@ -64,13 +65,12 @@ public class TradePostgres {
 		try (Connection conn = connUtil.getConnection()) {
 			String sql = "select trade.id, " 
 					+ "trade.trade_name, "
-					+ "trade.trade_health, " 
 					+ "trade.skill1, "
-					+ "trade.skill1damage, "
 					+ "trade.skill2, "
-					+ "trade.skill2damage, "
-					+ "from trades"
-					+ "where trade.id = ?";
+					+ "trade.trade_health, " 
+					+ "trade.skill1damage, "
+					+ "trade.skill2damage "
+					+ "from trades";
 
 
 			Statement stmt = conn.createStatement();
@@ -86,7 +86,7 @@ public class TradePostgres {
 				int skill1damage = resultSet.getInt("skill1damage");
 				int skill2damage = resultSet.getInt("skill2damage");
 				
-				trade = new Trade(id, tradeName, tradeHealth, skill1, skill1damage, skill2, skill2damage );
+				trade = new Trade(id, tradeName, skill1, skill2, tradeHealth, skill1damage, skill2damage);
 				trade.setId(id);
 
 				trades.add(trade);

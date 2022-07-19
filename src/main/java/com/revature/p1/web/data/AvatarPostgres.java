@@ -6,14 +6,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-import java.sql.Statement;
 import java.util.ArrayList;
+
+import com.revature.p1.web.models.Avatar;
+import com.revature.p1.web.models.Trade;
+import com.revature.p1.web.utils.ConnectionUtil;
 
 
 public class AvatarPostgres implements AvatarDAO{
+	private ConnectionUtil connUtil = ConnectionUtil.getConnectionUtil();
 
 	@Override
-	public Avatars create(Avatars avatars) {
+	public Avatar create(Avatar avatar) {
 		try (Connection conn = connUtil.getConnection()) {
 
 			conn.setAutoCommit(false);
@@ -25,16 +29,21 @@ public class AvatarPostgres implements AvatarDAO{
 			String[] keys = {"id"};
 			
 			PreparedStatement stmt = conn.prepareStatement(sql, keys);
-			stmt.setString(1, avatars.getName());
-			stmt.setInt(2, avatars.getAge());
-			stmt.setInt(3, avatars.getSpecies().getId());
-			stmt.setString(4, avatars.getDescription());
-			stmt.setInt(5, 1);
+			stmt.setString(1, avatar.getAvatarName());
+			stmt.setString(2, avatar.getGender());
+			stmt.setString(3, avatar.getEyeColor());
+			stmt.setString(4, avatar.getHairColor());
+			stmt.setString(5, avatar.getShirtColor());
+			stmt.setString(6, avatar.getPantColor());
+			stmt.setInt(7, avatar.getHeight());
+			stmt.setInt(8, avatar.getAge());
+			stmt.setInt(9, avatar.getLevel());
+			stmt.setInt(10, avatar.getHealth());
 			
 			int rowsAffected = stmt.executeUpdate();
 			ResultSet resultSet = stmt.getGeneratedKeys();
 			if (resultSet.next() && rowsAffected==1) {
-				avatars.setId(resultSet.getInt("id"));
+				avatar.setId(resultSet.getInt("id"));
 				conn.commit();
 			} else {
 				conn.rollback();
@@ -45,13 +54,13 @@ public class AvatarPostgres implements AvatarDAO{
 			e.printStackTrace();
 		}
 		
-		return avatars;
+		return avatar;
 
 	}
 	
 	@Override
-	public Avatars findById(int id) {
-		Avatar avatars = null;
+	public Avatar findById(int id) {
+		Avatar avatar = null;
 
 		try (Connection conn = connUtil.getConnection()) {
 			//id, avatar_name, gender, eye_color, hair_color, shirt_color, pant_color, height, age, level, health
@@ -69,8 +78,8 @@ public class AvatarPostgres implements AvatarDAO{
 					+ "avatartypes.id as avatartypes_id, "
 					+ "avatartypes.trades as avatartypes_race, "
 					+ "avatartypes.type_health as avatartypes_type_health, "
-					+ "avatartypes.skill1 as avatartypes_skill1, "
-					+ "avatartypes.skill1damage as avatartypes_skill1damage, "
+					+ "avatartypes.skill1 as trades_skill1, "
+					+ "avatartypes.skill1damage as trades_skill1damage, "
 					+ "avatartypes.skill2 as avatartypes_skill2, "
 					+ "avatartypes.skill2damage as avatartypes_skill2damage, "
 					+ "from avatars "
@@ -96,7 +105,7 @@ public class AvatarPostgres implements AvatarDAO{
 				int level = resultSet.getInt("level");
 				int health = resultSet.getInt("health");
 				
-				Avatartypes avatartypes = new Avatartypes(resultSet.getInt("avatars_id"),
+				Trade trade = new Trade(resultSet.getInt("avatars_id"),
 						resultSet.getString("avatars_trades"),
 						resultSet.getInt("avatars_type_health"),
 						resultSet.getString("avatars_skill1"),
@@ -105,22 +114,22 @@ public class AvatarPostgres implements AvatarDAO{
 						resultSet.getInt("avatars_skill2damage"));
 				
 
-				avatars = new Avatars(avatar_name, gender, eye_color, hair_color, shirt_color,
-						pant_color, height, age, level, health, avatartypes);
-				avatars.setId(id);
+				avatar = new Avatar(avatar_name, gender, eye_color, hair_color, shirt_color,
+						pant_color, height, age, level, health, trade);
+				avatar.setId(id);
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		return avatars;
+		return avatar;
 
 	}
 
 	@Override
-	public List<Avatars> findAll() {
-		List<Avatars> avatars = new ArrayList<>();
+	public List<Avatar> findAll() {
+		List<Avatar> avatar = new ArrayList<>();
 
 		try (Connection conn = connUtil.getConnection()) {
 			String sql = "select avatars.id, " 
@@ -162,7 +171,7 @@ public class AvatarPostgres implements AvatarDAO{
 				int level = resultSet.getInt("level");
 				int health = resultSet.getInt("health");
 				
-				Avatartypes avatartypes = new Avatartypes(resultSet.getInt("avatars_id"),
+				Trade trade = new Trade(resultSet.getInt("avatars_id"),
 						resultSet.getString("avatars_trades"),
 						resultSet.getInt("avatars_type_health"),
 						resultSet.getString("avatars_skill1"),
@@ -170,21 +179,21 @@ public class AvatarPostgres implements AvatarDAO{
 						resultSet.getString("avatars_skill2"),
 						resultSet.getInt("avatars_skill2damage"));
 				
-				avatars = new Avatars(avatar_name, gender, eye_color, hair_color, shirt_color,
-						pant_color, height, age, level, health, avatartypes);
-				avatars.setId(id);
+				avatar = new Avatar(avatar_name, gender, eye_color, hair_color, shirt_color,
+						pant_color, height, age, level, health, trade );
+				avatar.setId(id);
 
-				avatars.add(avatars);
+				avatar.add(avatar);
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return avatars;
+		return avatar;
 	}
 
 	@Override
-	public void update(Avatars avatars) {
+	public void update(Avatar avatar) {
 		try (Connection conn = connUtil.getConnection()) {
 			conn.setAutoCommit(false);
 			//id, avatar_name, gender, eye_color, hair_color, shirt_color,
@@ -204,18 +213,18 @@ public class AvatarPostgres implements AvatarDAO{
 					+ "where id=?";
 			
 			PreparedStatement stmt = conn.prepareStatement(sql);
-			stmt.setString(1, avatars.getAvatar_name());
-			stmt.setString(2, avatars.getAvatar_gender());
-			stmt.setString(3, avatars.getAvatar_eye_color());
-			stmt.setString(4, avatars.getAvatar_hair_color());
-			stmt.setString(5, avatars.getAvatar_shirt_color());
-			stmt.setString(6, avatars.getAvatar_pant_color());
-			stmt.setInt(7, avatars.getAvatar_height());
-			stmt.setInt(8, avatars.getAvatar_age());
-			stmt.setInt(9, avatars.getAvatar_level());
-			stmt.setInt(10, avatars.getAvatar_health());
-			stmt.setInt(11, avatars.getAvatar_type_id());
-			stmt.setInt(12, avatars.getId());
+			stmt.setString(1, avatar.getAvatar_name());
+			stmt.setString(2, avatar.getAvatar_gender());
+			stmt.setString(3, avatar.getAvatar_eye_color());
+			stmt.setString(4, avatar.getAvatar_hair_color());
+			stmt.setString(5, avatar.getAvatar_shirt_color());
+			stmt.setString(6, avatar.getAvatar_pant_color());
+			stmt.setInt(7, avatar.getAvatar_height());
+			stmt.setInt(8, avatar.getAvatar_age());
+			stmt.setInt(9, avatar.getAvatar_level());
+			stmt.setInt(10, avatar.getAvatar_health());
+			stmt.setInt(11, avatar.getAvatar_type_id());
+			stmt.setInt(12, avatar.getId());
 
 			
 			int rowsAffected = stmt.executeUpdate();
@@ -231,14 +240,14 @@ public class AvatarPostgres implements AvatarDAO{
 	}
 
 	@Override
-	public void delete(Avatars avatars) {
+	public void delete(Avatar avatar) {
 		try (Connection conn = connUtil.getConnection()) {
 			conn.setAutoCommit(false);
 			
 			String sql = "delete from avatars where id=?";
 			
 			PreparedStatement stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, avatars.getId());
+			stmt.setInt(1, avatar.getId());
 			
 			int rowsAffected = stmt.executeUpdate();
 			if (rowsAffected<=1) {

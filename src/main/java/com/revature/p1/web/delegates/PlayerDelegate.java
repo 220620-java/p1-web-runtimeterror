@@ -3,13 +3,17 @@ package com.revature.p1.web.delegates;
 import java.io.IOException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.exc.MismatchedInputException;
+import com.revature.p1.web.models.Player;
+import com.revature.p1.web.services.PlayerService;
+import com.revature.p1.web.services.PlayerServiceImpl;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public class PlayerDelegate implements FrontControllerDelegate {
-	//private PlayerService playerServ = new PlayerServiceImpl();
+	private PlayerService playerServ = new PlayerServiceImpl();
 	//private AvatarService avatarServ = new AvatarServiceImpl();
 	private ObjectMapper objMapper = new ObjectMapper();
 
@@ -37,15 +41,15 @@ public class PlayerDelegate implements FrontControllerDelegate {
 	public void get(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String path = (String) req.getAttribute("path");
 		if (path==null || "".equals(path)) {
-			resp.getWriter().write(objMapper.writeValueAsString(userServ.viewAllPets()));
+			resp.getWriter().write(objMapper.writeValueAsString(playerServ.viewAllPlayers()));
 		} else {
 			try {
 				int id = Integer.valueOf(path);
-				Pet pet = userServ.getPet(id);
-				if (pet!=null) {
-					resp.getWriter().write(objMapper.writeValueAsString(pet));
+				Player player = playerServ.getPlayer(id);
+				if (player!=null) {
+					resp.getWriter().write(objMapper.writeValueAsString(player));
 				} else {
-					resp.sendError(404, "Pet with that ID not found.");
+					resp.sendError(404, "Player with that ID not found.");
 				}
 			} catch (NumberFormatException e) {
 				resp.sendError(400, e.getMessage());
@@ -56,10 +60,10 @@ public class PlayerDelegate implements FrontControllerDelegate {
 	public void post(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String path = (String) req.getAttribute("path");
 		if (path==null || "".equals(path)) {
-			Pet pet = objMapper.readValue(req.getInputStream(), Pet.class);
-			if (pet!=null) {
-				pet = adminServ.addPet(pet);
-				resp.getWriter().write(objMapper.writeValueAsString(pet));
+			Player player = objMapper.readValue(req.getInputStream(), Player.class);
+			if (player!=null) {
+				player = playerServ.addPlayer(player);
+				resp.getWriter().write(objMapper.writeValueAsString(player));
 			} else {
 				resp.sendError(400, "The request body was empty.");
 			}
@@ -75,15 +79,15 @@ public class PlayerDelegate implements FrontControllerDelegate {
 		} else {
 			try {
 				int id = Integer.valueOf(path);
-				Pet pet = userServ.getPet(id);
-				if (pet!=null) {
-					pet = objMapper.readValue(req.getInputStream(), Pet.class);
+				Player player = playerServ.getPlayer(id);
+				if (player!=null) {
+					player = objMapper.readValue(req.getInputStream(), Player.class);
 					
 					try {
-						if (pet==null) throw new RuntimeException();
-						if (pet.getId()==id) {
-							pet = adminServ.editPet(pet);
-							resp.getWriter().write(objMapper.writeValueAsString(pet));
+						if (player==null) throw new RuntimeException();
+						if (player.getId()==id) {
+							player = playerServ.editPlayer(player);
+							resp.getWriter().write(objMapper.writeValueAsString(player));
 						} else {
 							resp.sendError(409, "The ID in the URI did not match the ID in the body.");
 						}
