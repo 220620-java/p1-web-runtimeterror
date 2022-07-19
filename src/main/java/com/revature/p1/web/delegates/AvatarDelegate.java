@@ -3,17 +3,23 @@ package com.revature.p1.web.delegates;
 import java.io.IOException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.exc.MismatchedInputException;
+import com.revature.p1.web.models.Avatar;
+import com.revature.p1.web.models.Player;
+import com.revature.p1.web.services.AvatarService;
+import com.revature.p1.web.services.AvatarServiceImpl;
+import com.revature.p1.web.services.PlayerService;
+import com.revature.p1.web.services.PlayerServiceImpl;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public class AvatarDelegate implements FrontControllerDelegate {
-	//petapp code; needs to be updated when service files are finished
 	//private PlayerService playerServ = new PlayerServiceImpl();
-	//private AvatarService avatarServ = new AvatarServiceImpl();
+	private AvatarService avatarServ = new AvatarServiceImpl();
 	private ObjectMapper objMapper = new ObjectMapper();
-	
+
 	@Override
 	public void handle(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -30,24 +36,23 @@ public class AvatarDelegate implements FrontControllerDelegate {
 			put(req, resp);
 			break;
 		case "DELETE":
-			resp.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
+			delete(req, resp);
 			break;
 		default:
 		}
 	}
-	//petapp code; needs to be updated when service files are finished
 	public void get(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String path = (String) req.getAttribute("path");
 		if (path==null || "".equals(path)) {
-			resp.getWriter().write(objMapper.writeValueAsString(userServ.viewAllPets()));
+			resp.getWriter().write(objMapper.writeValueAsString(avatarServ.viewAllAvatars()));
 		} else {
 			try {
 				int id = Integer.valueOf(path);
-				Pet pet = userServ.getPet(id);
-				if (pet!=null) {
-					resp.getWriter().write(objMapper.writeValueAsString(pet));
+				Avatar avatar = avatarServ.getAvatar(id);
+				if (avatar!=null) {
+					resp.getWriter().write(objMapper.writeValueAsString(avatar));
 				} else {
-					resp.sendError(404, "Pet with that ID not found.");
+					resp.sendError(404, "Avatar with that ID not found.");
 				}
 			} catch (NumberFormatException e) {
 				resp.sendError(400, e.getMessage());
@@ -58,15 +63,15 @@ public class AvatarDelegate implements FrontControllerDelegate {
 	public void post(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String path = (String) req.getAttribute("path");
 		if (path==null || "".equals(path)) {
-			Pet pet = objMapper.readValue(req.getInputStream(), Pet.class);
-			if (pet!=null) {
-				pet = adminServ.addPet(pet);
-				resp.getWriter().write(objMapper.writeValueAsString(pet));
+			Avatar avatar = objMapper.readValue(req.getInputStream(), Avatar.class);
+			if (avatar!=null) {
+				avatar = avatarServ.addAvatar(avatar);
+				resp.getWriter().write(objMapper.writeValueAsString(avatar));
 			} else {
 				resp.sendError(400, "The request body was empty.");
 			}
 		} else {
-			resp.sendError(400, "Cannot POST to this URI. Try sending the request to /pets.");
+			resp.sendError(400, "Cannot POST to this URI. Try sending the request to /avatars.");
 		}
 	}
 		
@@ -77,15 +82,15 @@ public class AvatarDelegate implements FrontControllerDelegate {
 		} else {
 			try {
 				int id = Integer.valueOf(path);
-				Pet pet = userServ.getPet(id);
-				if (pet!=null) {
-					pet = objMapper.readValue(req.getInputStream(), Pet.class);
+				Avatar avatar = avatarServ.getAvatar(id);
+				if (avatar!=null) {
+					avatar = objMapper.readValue(req.getInputStream(), Avatar.class);
 					
 					try {
-						if (pet==null) throw new RuntimeException();
-						if (pet.getId()==id) {
-							pet = adminServ.editPet(pet);
-							resp.getWriter().write(objMapper.writeValueAsString(pet));
+						if (avatar==null) throw new RuntimeException();
+						if (avatar.getId()==id) {
+							avatar = avatarServ.editAvatar(avatar);
+							resp.getWriter().write(objMapper.writeValueAsString(avatar));
 						} else {
 							resp.sendError(409, "The ID in the URI did not match the ID in the body.");
 						}
@@ -99,5 +104,9 @@ public class AvatarDelegate implements FrontControllerDelegate {
 				resp.sendError(400, e.getMessage());
 			}
 		}
+	}
+	
+	public void delete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		//need more
 	}
 }
