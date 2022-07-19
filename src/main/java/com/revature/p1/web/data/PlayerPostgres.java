@@ -8,34 +8,32 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.revature.p1.orm.utils.ConnectionUtil;
-import com.revature.p1.web.models.AvatarTypes;
-import com.revature.p1.web.models.Avatars;
-import com.revature.p1.web.models.Players;
+import com.revature.p1.web.utils.ConnectionUtil;
+import com.revature.p1.web.models.Avatar;
+import com.revature.p1.web.models.Player;
+import com.revature.p1.web.models.Trade;
 
 
 public class PlayerPostgres {
 	private ConnectionUtil connUtil = ConnectionUtil.getConnectionUtil();
 
-	@Override
-	public Players create(Players players) throws SQLException {
+	public Player create(Player player) throws SQLException {
 		try (Connection conn = connUtil.getConnection()) {
 
 			conn.setAutoCommit(false);
 
-			String sql = "insert into players " + "(id, full_name, username, password) " + "values (default, ?, ?, ?)";
+			String sql = "insert into players " + "(id, full_name, username) " + "values (default, ?, ?)";
 			String[] keys = { "id" };
 
 			PreparedStatement stmt = conn.prepareStatement(sql, keys);
-			stmt.setString(1, players.getFull_name());
-			stmt.setString(2, players.getUsername());
-			stmt.setString(3, players.getPassword());
+			stmt.setString(1, player.getName());
+			stmt.setString(2, player.getUsername());
 
 			int rowsAffected = stmt.executeUpdate();
 			ResultSet resultSet = stmt.getGeneratedKeys();
 			if (resultSet.next() && rowsAffected == 1) {
-				players.setId(resultSet.getInt("id"));
-				if (addPetsToUser(players, conn)) {
+				player.setId(resultSet.getInt("id"));
+				if (addAvatarToPlayer(player, conn)) {
 					conn.commit();
 				} else {
 					conn.rollback();
@@ -52,16 +50,16 @@ public class PlayerPostgres {
 			e.printStackTrace();
 		}
 
-		return players;
+		return player;
 	}
 
 	@Override
-	public Players findById(int id) {
-		Players players = null;
+	public Player findById(int id) {
+		Player player = null;
 
 		try (Connection conn = connUtil.getConnection()) {
 
-			String sql = "select id, full_name, username, password from person where id=?";
+			String sql = "select id, full_name, username from person where id=?";
 
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, id);
@@ -69,12 +67,11 @@ public class PlayerPostgres {
 			ResultSet resultSet = stmt.executeQuery();
 
 			if (resultSet.next()) {
-				players = new Players();
-				players.setId(id);
-				players.setFull_name(resultSet.getString("full_name"));
-				players.setUsername(resultSet.getString("username"));
-				players.setPassword(resultSet.getString("password"));
-				players.setPlayers(this.getAvatarsByPlayers(players, conn));
+				player = new Player();
+				player.setId(id);
+				player.setName(resultSet.getString("full_name"));
+				player.setUsername(resultSet.getString("username"));
+				player.setPlayer(this.getAvatarsByPlayers(player, conn));
 			}
 
 		} catch (SQLException e) {
@@ -85,37 +82,36 @@ public class PlayerPostgres {
 	}
 
 	@Override
-	public List<Players> findAll() {
-		List<Players> players = new ArrayList<>();
+	public List<Player> findAll() {
+		List<Player> player = new ArrayList<>();
 		try (Connection conn = connUtil.getConnection()) {
-			String sql = "select id, full_name, username, password from players";
+			String sql = "select id, full_name, username from players";
 
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			
 			ResultSet resultSet = stmt.executeQuery();
 
 			while (resultSet.next()) {
-				Players players = new Players();
-				Players.setId(resultSet.getInt("id"));
-				Players.setFull_name(resultSet.getString("full_name"));
-				Players.setUsername(resultSet.getString("username"));
-				Players.setPassword(resultSet.getString("password"));
-				Players.setAvatars(this.getAvatarsByPlayers(players, conn));
-				players.add(players);
+				Player player = new Player();
+				Player.setId(resultSet.getInt("id"));
+				Player.setName(resultSet.getString("full_name"));
+				Player.setUsername(resultSet.getString("username"));
+				Player.setAvatars(this.getAvatarsByPlayers(player, conn));
+				player.add(player);
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return players;
+		return player;
 	}
 
 	@Override
-	public Players findByUsername(String username) {
-		Players players = null;
+	public Player findByUsername(String username) {
+		Player player = null;
 		
 		try (Connection conn = connUtil.getConnection()) {
-			String sql = "select id, full_name, username, password from person where username=?";
+			String sql = "select id, full_name, username from person where username=?";
 
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, username);
@@ -123,23 +119,22 @@ public class PlayerPostgres {
 			ResultSet resultSet = stmt.executeQuery();
 
 			if (resultSet.next()) {
-				players = new Players();
-				players.setId(resultSet.getInt("id"));
-				players.setPlayers(resultSet.getString("players"));
-				players.setUsername(resultSet.getString("username"));
-				players.setPassword(resultSet.getString("password"));
-				players.setAvatars(this.getAvatarsByPlayers(players, conn));
+				player = new Player();
+				player.setId(resultSet.getInt("id"));
+				player.setPlayer(resultSet.getString("players"));
+				player.setUsername(resultSet.getString("username"));
+				player.setAvatars(this.getAvatarsByPlayers(player, conn));
 			}
 
 		} catch (SQLException e) {
 			//e.printStackTrace();
 		}
 
-		return players;
+		return player;
 	}
 	
-	private List<Avatars> getAvatarsByPlayers(Players players, Connection conn) throws SQLException {
-		List<Avatars> avatars = new ArrayList<>();
+	private List<Avatar> getAvatarsByPlayers(Player player, Connection conn) throws SQLException {
+		List<Avatar> avatar = new ArrayList<>();
 		
 		String sql = "select avatars.id, " 
 				+ "avatars.name, " 
@@ -162,15 +157,15 @@ public class PlayerPostgres {
 				+ "join avatartypes on avatars.type_id = avatartypes.id " 
 				+ "where players_id=?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setInt(1, players.getId());
+		stmt.setInt(1, player.getId());
 		ResultSet resultSet = stmt.executeQuery();
 		
 		while (resultSet.next()) {
-			Avatars avatars = new Avatars();
+			Avatar avatar = new Avatar();
 			String name = resultSet.getString("name");
 			String userName = resultSet.getString("userName");
 			//type_health, skill1, skill1damage, skill2, skill2damage
-			Avatartypes avatartype = new Avatartypes(resultSet.getInt("type_id"),
+			Trade trade = new Trade(resultSet.getInt("type_id"),
 					resultSet.getString("type_health"),
 					resultSet.getString("skill1"),
 					resultSet.getString("skill1damage"),
@@ -178,19 +173,19 @@ public class PlayerPostgres {
 					resultSet.getString("skill2damage"));
 			
 
-			avatars = new Avatars(name, userName, avatartype);
-			avatars.setId(resultSet.getInt("id"));
+			avatar = new Avatar(name, userName, trade);
+			avatar.setId(resultSet.getInt("id"));
 			
-			avatars.add(avatars);
+			avatar.add(avatar);
 		}
 		
-		return avatars;
+		return avatar;
 	}
 	
-	private boolean addAvatarsToPlayers(Players players, Connection conn) throws SQLException {
+	private boolean addAvatarsToPlayers(Player player, Connection conn) throws SQLException {
 		String sql = "select id from avatars where player_id=?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setInt(1, players.getId());
+		stmt.setInt(1, player.getId());
 		
 		ResultSet resultSet = stmt.executeQuery();
 		List<Integer> existingIds = new ArrayList<>();
@@ -198,12 +193,12 @@ public class PlayerPostgres {
 			existingIds.add(resultSet.getInt("id"));
 		}
 		
-		for (Avatars avatars : players.getAvatars()) {
-			if (existingIds.contains(avatars.getId())) {
+		for (Avatar avatar : player.getAvatars()) {
+			if (existingIds.contains(avatar.getId())) {
 				sql = "update avatars set players_id=? where id=?";
 				stmt = conn.prepareStatement(sql);
-				stmt.setInt(1, players.getId());
-				stmt.setInt(2, avatars.getId());
+				stmt.setInt(1, player.getId());
+				stmt.setInt(2, avatar.getId());
 				
 				int rowsUpdated = stmt.executeUpdate();
 				if (rowsUpdated!=1) {
