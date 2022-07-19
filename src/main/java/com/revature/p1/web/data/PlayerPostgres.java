@@ -71,14 +71,14 @@ public class PlayerPostgres {
 				player.setId(id);
 				player.setName(resultSet.getString("full_name"));
 				player.setUsername(resultSet.getString("username"));
-				player.setPlayer(this.getAvatarsByPlayers(player, conn));
+				player.setAvatars(this.getAvatarsByPlayers(player, conn));
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		return players;
+		return player;
 	}
 
 	@Override
@@ -121,7 +121,7 @@ public class PlayerPostgres {
 			if (resultSet.next()) {
 				player = new Player();
 				player.setId(resultSet.getInt("id"));
-				player.setPlayer(resultSet.getString("players"));
+				player.setName(resultSet.getString("players"));
 				player.setUsername(resultSet.getString("username"));
 				player.setAvatars(this.getAvatarsByPlayers(player, conn));
 			}
@@ -134,52 +134,37 @@ public class PlayerPostgres {
 	}
 	
 	private List<Avatar> getAvatarsByPlayers(Player player, Connection conn) throws SQLException {
-		List<Avatar> avatar = new ArrayList<>();
+		List<Avatar> avatars = new ArrayList<>();
 		
 		String sql = "select avatars.id, " 
-				+ "avatars.name, " 
-				+ "avatars.gender, "
-				+ "avatars.eye_color, "
-				+ "avatars.hair_color, "
-				+ "avatars.shirt_color, "
-				+ "avatars.pant_color, "
-				+ "avatars.height, "
-				+ "avatars.age, "
+				+ "avatars.avatar_name, "
 				+ "avatars.level, "
 				+ "avatars.health, "
-				//type_health, skill1, skill1damage, skill2, skill2damage
-				+ "avatartypes.type_health as type_health, "
-				+ "avatartypes.skill1 as skill1, "
-				+ "Avatartypes.skill1damage as skill1damage, "
-				+ "avatartypes.skill2 as skill2, "
-				+ "avatartypes.skill2damage as skill2damage, "
+				+ "trades.trade_name as trade, "
 				+ "from avatars "
-				+ "join avatartypes on avatars.type_id = avatartypes.id " 
-				+ "where players_id=?";
+				+ "join trades on avatars.trade_id = trades.id " 
+				+ "where players.avatar_id=?";
+		
 		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setInt(1, player.getId());
+		stmt.setInt(1, player.getAvatars(avatars[0].get));
 		ResultSet resultSet = stmt.executeQuery();
 		
 		while (resultSet.next()) {
 			Avatar avatar = new Avatar();
-			String name = resultSet.getString("name");
-			String userName = resultSet.getString("userName");
-			//type_health, skill1, skill1damage, skill2, skill2damage
-			Trade trade = new Trade(resultSet.getInt("type_id"),
-					resultSet.getString("type_health"),
-					resultSet.getString("skill1"),
-					resultSet.getString("skill1damage"),
-					resultSet.getString("skill2"),
-					resultSet.getString("skill2damage"));
+			String avatarName = resultSet.getString("avatar_name");
+			int avatarLevel = resultSet.getInt("level");
+			int avatarHealth = resultSet.getInt("health");
+			Trade trade = new Trade(resultSet.getInt("id"),
+					resultSet.getString("trade_name"));
 			
 
-			avatar = new Avatar(name, userName, trade);
+			avatar = new Avatar(avatarName, avatarLevel, avatarHealth, trade);
 			avatar.setId(resultSet.getInt("id"));
 			
-			avatar.add(avatar);
+			avatars.add(avatar);
 		}
 		
-		return avatar;
+		return avatars;
 	}
 	
 	private boolean addAvatarsToPlayers(Player player, Connection conn) throws SQLException {
