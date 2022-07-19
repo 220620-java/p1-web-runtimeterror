@@ -70,7 +70,7 @@ public abstract class TradePostgres implements TradeDAO {
 					+ "trade.trade_health, " 
 					+ "trade.skill1damage, "
 					+ "trade.skill2damage "
-					+ "from trades";
+					+ "from trades";n
 
 
 			Statement stmt = conn.createStatement();
