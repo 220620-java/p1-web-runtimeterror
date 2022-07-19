@@ -6,19 +6,19 @@ public class PlayerServiceImpl implements PlayerService {
 
 	@Override
 	public Player getPlayer(int id) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 	@Override
 	public Object viewAllPlayers() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 	@Override
 	public Player addPlayer(Player player) {
-		// TODO Auto-generated method stub
+	
 		return null;
 	}
 
