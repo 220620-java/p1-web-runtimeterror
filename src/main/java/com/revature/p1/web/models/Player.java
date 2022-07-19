@@ -1,4 +1,4 @@
-package com.revature.p1.orm.models;
+package com.revature.p1.web.models;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,6 @@ public class Player {
         this.id = 0;
         this.name = "";
         this.username = "";
-        this.avatars = avatars;
     }
 
     public Player (String username) {

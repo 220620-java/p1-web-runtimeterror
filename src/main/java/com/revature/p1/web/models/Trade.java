@@ -1,27 +1,32 @@
-package com.revature.p1.orm.models;
+package com.revature.p1.web.models;
 
 public class Trade {
 	private int id;
-	private String trade, skill1, skill2;
+	private String tradeName, skill1, skill2;
 	private int tradeHealth, skill1damage, skill2damage;
 	
 	//------------------------ constructors -----------------------
 	public Trade() {
 		super();
 		this.id = 1;
-		this.trade = "archer";
+		this.tradeName = "archer";
 		this.skill1 = "arrow";
 		this.skill2 = "flamingarrow";
 		this.tradeHealth = 100;
 		this.skill1damage = 5;
 		this.skill2damage = 8;
 	}
-
-    public Trade(int id, String trade, String skill1, String skill2, int tradeHealth, int skill1damage,
-			int skill2damage) {
+	
+	public Trade(int id, String tradeName) {
 		super();
 		this.id = id;
-		this.trade = trade;
+		this.tradeName = tradeName;
+	}
+
+    public Trade(int id, String tradeName, String skill1, String skill2, int tradeHealth, int skill1damage, int skill2damage) {
+		super();
+		this.id = id;
+		this.tradeName = tradeName;
 		this.skill1 = skill1;
 		this.skill2 = skill2;
 		this.tradeHealth = tradeHealth;
@@ -33,7 +38,7 @@ public class Trade {
     //public int getHealth(typeId) {}
 	@Override
 	public String toString() {
-		return "Trade [id=" + id + ", trade=" + trade + ", skill1=" + skill1 + ", skill2=" + skill2 + ", tradeHealth="
+		return "Trade [id=" + id + ", trade=" + tradeName + ", skill1=" + skill1 + ", skill2=" + skill2 + ", tradeHealth="
 				+ tradeHealth + ", skill1damage=" + skill1damage + ", skill2damage=" + skill2damage + "]";
 	}
 
@@ -48,11 +53,11 @@ public class Trade {
 	}
 	//-------------------------------------------------------
 	public String getTrade() {
-		return trade;
+		return tradeName;
 	}
 
 	public void setTrade(String trade) {
-		this.trade = trade;
+		this.tradeName = trade;
 	}
 	//-------------------------------------------------------
 	public String getSkill1() {

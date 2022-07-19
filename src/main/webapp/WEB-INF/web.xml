@@ -2,4 +2,13 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://JAVA.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
   <display-name>p1-web-runtimeterror</display-name>
   
+  <!-- front controller servlet -->
+  <servlet>
+  	<servlet-name>Front</servlet-name>
+  	<servlet-class>com.revature.p1.web.servlets.FrontControllerServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>Front</servlet-name>
+  	<url-pattern>/</url-pattern>
+  </servlet-mapping>
 </web-app>

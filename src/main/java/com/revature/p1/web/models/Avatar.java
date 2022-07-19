@@ -1,12 +1,12 @@
-package com.revature.p1.orm.models;
+package com.revature.p1.web.models;
 
 public class Avatar {
     private int id;
     private String avatarName, gender, eyeColor, hairColor, shirtColor, pantColor;
-    private int height, age, level, health, typeId;
+    private int height, age, level, health, tradeId;
 
 
-    //------------------------ classes -----------------------
+    //------------------------ constructors -----------------------
     public Avatar (){
         super();
         this.id = 0;
@@ -20,17 +20,43 @@ public class Avatar {
         this.age = 25;
         this.level = 1;
         this.health = 0; //add getHealth method
-        this.typeId = 1;
+        this.tradeId = 1;
     }
-
-    //------------------------ methods -----------------------
-    //public int getHealth(typeId) {}
     
-    @Override
+    public Avatar(String avatarName, int level, int health, Trade trade) {
+		// TODO Auto-generated constructor stub
+    	super();
+    	this.avatarName = avatarName;
+    	this.level = level;
+    	this.health = health;
+    	this.tradeId = trade.getId();
+	}
+
+    public Avatar(int id, String avatarName, String gender, String eyeColor, String hairColor, String shirtColor,
+			String pantColor, int height, int age, int level, int health, int tradeId) {
+		super();
+		this.id = id;
+		this.avatarName = avatarName;
+		this.gender = gender;
+		this.eyeColor = eyeColor;
+		this.hairColor = hairColor;
+		this.shirtColor = shirtColor;
+		this.pantColor = pantColor;
+		this.height = height;
+		this.age = age;
+		this.level = level;
+		this.health = health;
+		this.tradeId = tradeId;
+	}
+
+	//------------------------ methods -----------------------
+    //public int getHealth(typeId) {}
+
+	@Override
     public String toString() {
         return "Avatar [id= " + id + ", avatar name = " + avatarName + ", gender= " + gender + ", eye color= " + eyeColor 
         + ", hair color= " + hairColor + ", shirt color= " + shirtColor + ", pant color= " + pantColor + ", height= " + height
-        + ", age=" + age + ", level= " + ", health= " + health + ", typeId= " + typeId + "]";
+        + ", age=" + age + ", level= " + ", health= " + health + ", tradeId= " + tradeId + "]";
     }
 
     //------------------------ getters & setters -----------------------
@@ -122,12 +148,12 @@ public class Avatar {
 		this.health = health;
 	}
 	//-------------------------------------------------------
-	public int getTypeId() {
-		return typeId;
+	public int getTradeId() {
+		return tradeId;
 	}
 
-	public void setTypeId(int typeId) {
-		this.typeId = typeId;
+	public void setTradeId(int tradeId) {
+		this.tradeId = tradeId;
 	}
        
 }
