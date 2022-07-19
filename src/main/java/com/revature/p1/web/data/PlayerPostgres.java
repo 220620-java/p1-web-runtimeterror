@@ -146,7 +146,9 @@ public class PlayerPostgres {
 				+ "where players.avatar_id=?";
 		
 		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setInt(1, player.getAvatars(avatars[0].get));
+		
+		//have to figure out how to access the avatar id's from a players table in an array list
+		stmt.setInt(1, player.getAvatars(avatars[1].get));
 		ResultSet resultSet = stmt.executeQuery();
 		
 		while (resultSet.next()) {
