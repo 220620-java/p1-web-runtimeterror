@@ -15,7 +15,6 @@ public class Player {
         this.id = 0;
         this.name = "";
         this.username = "";
-        this.avatars = avatars;
     }
 
     public Player (String username) {
