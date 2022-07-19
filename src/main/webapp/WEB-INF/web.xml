@@ -5,6 +5,10 @@
   <!-- front controller servlet -->
   <servlet>
   	<servlet-name>Front</servlet-name>
-  	<servlet-class>com.revature</servlet-class>
+  	<servlet-class>com.revature.p1.web.servlets.FrontControllerServlet</servlet-class>
   </servlet>
+  <servlet-mapping>
+  	<servlet-name>Front</servlet-name>
+  	<url-pattern>/</url-pattern>
+  </servlet-mapping>
 </web-app>
