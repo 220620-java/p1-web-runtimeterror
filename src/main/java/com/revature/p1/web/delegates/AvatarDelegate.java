@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public class AvatarDelegate implements FrontControllerDelegate {
+	//petapp code; needs to be updated when service files are finished
 	//private PlayerService playerServ = new PlayerServiceImpl();
 	//private AvatarService avatarServ = new AvatarServiceImpl();
 	private ObjectMapper objMapper = new ObjectMapper();
@@ -34,6 +35,7 @@ public class AvatarDelegate implements FrontControllerDelegate {
 		default:
 		}
 	}
+	//petapp code; needs to be updated when service files are finished
 	public void get(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String path = (String) req.getAttribute("path");
 		if (path==null || "".equals(path)) {
