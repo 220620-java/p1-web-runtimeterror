@@ -4,14 +4,14 @@ import com.revature.p1.web.models.Avatar;
 
 public interface AvatarService {
 
-	Avatar getAvatar(int id);
+	public Avatar getAvatar(int id);
 	
-	Object viewAllAvatars();
+	public Avatar viewAllAvatars();
 
-	Avatar addAvatar(Avatar avatar);
+	public Avatar addAvatar(Avatar avatar);
 	
-	Avatar editAvatar(Avatar avatar);
+	public Avatar editAvatar(Avatar avatar);
 	
-	Avatar deleteAvatar(Avatar avatar); //or int deleteAvatar(int id);
+	public Avatar deleteAvatar(Avatar avatar); //or int deleteAvatar(int id);
 	
 }
