@@ -1,31 +1,32 @@
 package com.revature.p1.web.services;
 
-import com.revature.p1.web.models.Player;
+import java.util.List;
+
+import com.revature.p1.web.data.PlayerDAO;
+import com.revature.p1.web.data.TradeDAO;
+
+import com.revature.p1.web.models.Trade;
 
 public class PlayerServiceImpl implements PlayerService {
 
+	private PlayerDAO playerDao;
+	private TradeDAO tradeDao;
+
 	@Override
-	public Player getPlayer(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Trade> findAll() {
+		
+		return tradeDao.findAll();
+		
+		
 	}
 
 	@Override
-	public Object viewAllPlayers() {
-		// TODO Auto-generated method stub
-		return null;
+	public Trade findById(int id) {
+		
+		return tradeDao.findById(id);
 	}
-
-	@Override
-	public Player addPlayer(Player player) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Player editPlayer(Player player) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
+	
+	
+	
 }
