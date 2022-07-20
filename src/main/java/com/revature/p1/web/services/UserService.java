@@ -23,7 +23,7 @@ public interface UserService {
 	public Player create(Player player);
 	
 	
-	public Avatar addAvatar(Avatar avatar);
+	
 	
 	
 	public Player findByUsername(String username);
