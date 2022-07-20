@@ -12,7 +12,7 @@ public class TradeServiceImpl implements TradeService{
 	@Override
 	public List<Trade> findAll() {
 		
-			return tradeDao.findAll();
+		return tradeDao.findAll();
 		
 		
 	}
