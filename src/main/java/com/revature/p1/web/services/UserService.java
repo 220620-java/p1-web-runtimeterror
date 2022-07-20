@@ -15,13 +15,15 @@ public interface UserService {
 	public Player findById(int id);
 	
 	
-	
+	public Avatar editAvatar(Avatar avatar);
 	
 	
 	public List<Player> findAll();
 	
 	public Player create(Player player);
 	
+	
+	public Avatar addAvatar(Avatar avatar);
 	
 	
 	public Player findByUsername(String username);
