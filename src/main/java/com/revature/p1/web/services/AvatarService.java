@@ -6,12 +6,19 @@ public interface AvatarService {
 
 	public Avatar getAvatar(int id);
 	
+	
+	
+	
 	public Avatar viewAllAvatars();
+	
 
 	public Avatar addAvatar(Avatar avatar);
 	
+	
 	public Avatar editAvatar(Avatar avatar);
 	
+	
 	public Avatar deleteAvatar(Avatar avatar); //or int deleteAvatar(int id);
+	
 	
 }

@@ -9,7 +9,7 @@ import com.revature.p1.web.models.Player;
 
 public interface PlayerService {
 	
-	public Player getPlayer(int id);
+	public Player createPlayer(Player player);
 	
 	
 	public Player findById(int id);
