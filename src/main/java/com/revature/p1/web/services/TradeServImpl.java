@@ -12,10 +12,10 @@ public class TradeServImpl implements TradeService {
 	private static TradeDAO tradeDao = new TradeORM();
 
 	@Override
-	public Trade create(Trade trade) {
+	public Trade create(Trade trade) throws TradeAlreadyExistsException {
 		// TODO Auto-generated method stub
 		try {
-			trade = tradeDao.create(trade);
+			return tradeDao.create(trade);
 		} catch (SQLException e) {
 			//**********************************************************
 			//throw new UsernameAlreadyExistsException();
@@ -36,7 +36,7 @@ public class TradeServImpl implements TradeService {
 	}
 
 	@Override
-	public Object update(Trade trade) {
+	public void update(Trade trade) {
 		tradeDao.update(trade);
 	}
 
