@@ -1,4 +1,4 @@
-package com.revature.p1.web.data.orm;
+package com.revature.p1.web.orm;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
