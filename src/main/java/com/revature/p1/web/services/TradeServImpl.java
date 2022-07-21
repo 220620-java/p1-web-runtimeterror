@@ -36,8 +36,8 @@ public class TradeServImpl implements TradeService {
 	}
 
 	@Override
-	public void update(Trade trade) {
-		System.out.println("Cannot update a trade.");
+	public Object update(Trade trade) {
+		tradeDao.update(trade);
 	}
 
 	@Override
