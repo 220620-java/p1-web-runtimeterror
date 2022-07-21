@@ -1,13 +1,19 @@
 package com.revature.p1.web.data;
 
+import java.util.List;
+
 import com.revature.p1.web.models.Player;
 
 public interface PlayerDAO extends DataAccessObject<Player>{
 	public Player findByUsername(String username);
 	
-	//createPlayer
+	public Player create(Player player);
 	
-	//updatePlayer
+	public Player findById(int id);
 	
-	//deletePlayer
+	public List<Player> findAll();
+
+	public void update(Player player);
+
+	public void delete(Player player);
 }

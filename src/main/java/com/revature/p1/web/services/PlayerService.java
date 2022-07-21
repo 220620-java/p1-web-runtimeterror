@@ -8,11 +8,15 @@ import com.revature.p1.web.models.Player;
 import com.revature.p1.web.models.Trade;
 
 public interface PlayerService {
-	//should only have a get method; cannot add, update, or delete (table is set in db)
+	public Player findByUsername(String username);
 	
-	public List<Trade> findAll();
+	public Player create(Player player);
 	
-	//private List<Avatar> getAvatarsByPlayers(Player player, Connection conn);
+	public Player findById(int id);
 	
-	public Trade findById(int id);
+	public List<Player> findAll();
+
+	public void update(Player player);
+
+	public void delete(Player player);
 }
