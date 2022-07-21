@@ -19,3 +19,4 @@ public Trade create(Trade trade);
 //orm implements dao interfaces
 //then these service classes call those dao methods
 //then servlets/delegate calls these services
+//woo
