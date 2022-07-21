@@ -15,6 +15,7 @@ public class Player {
         this.id = 0;
         this.name = "";
         this.username = "";
+        this.avatars = new ArrayList<>();
     }
 
     public Player (String username) {
@@ -27,7 +28,7 @@ public class Player {
 		this.id = id;
 		this.name = name;
 		this.username = username;
-		this.avatars = avatars;
+		this.avatars = new ArrayList<>();
 	}
 
     //------------------------ methods -----------------------
