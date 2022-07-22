@@ -8,7 +8,6 @@ import com.revature.p1.web.exceptions.UsernameAlreadyExistsException;
 import com.revature.p1.web.models.Player;
 import com.revature.p1.web.services.PlayerServImpl;
 import com.revature.p1.web.services.PlayerService;
-import com.revature.p1.web.services.PlayerServiceImpl;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,7 +18,7 @@ public class PlayerDelegate implements FrontControllerDelegate {
 	private ObjectMapper objMapper = new ObjectMapper();
 
 	@Override
-	public void handle(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	public void handle(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, UsernameAlreadyExistsException {
 		// TODO Auto-generated method stub
 		String method = req.getMethod();
 		
