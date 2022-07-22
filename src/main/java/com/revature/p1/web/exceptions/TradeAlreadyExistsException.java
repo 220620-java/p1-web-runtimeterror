@@ -1,11 +1,12 @@
 package com.revature.p1.web.exceptions;
 
 public class TradeAlreadyExistsException extends Exception {
-	
-	/*
-	 * try {
-	 * 
-	 * } catch (Exception e) {
-	 * System.out.println("Sorry but Trade can not be completed"); }
-	 */
+	private Error code;
+
+	public TradeAlreadyExistsException(String message, Throwable cause, Error code) {
+		
+		super(message, cause);
+		this.code = code;
+	}
+
 }
