@@ -10,6 +10,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.revature.p1.web.data.AvatarDAO;
+import com.revature.p1.web.data.orm.AvatarORM;
 import com.revature.p1.web.models.Avatar;
 import com.revature.p1.web.models.Player;
 import com.revature.p1.web.services.AvatarServImpl;
