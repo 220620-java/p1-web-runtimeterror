@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import com.revature.p1.web.models.Avatar;
 import com.revature.p1.web.models.Player;
+import com.revature.p1.web.services.AvatarServImpl;
 import com.revature.p1.web.services.AvatarService;
 import com.revature.p1.web.services.AvatarServiceImpl;
 import com.revature.p1.web.services.PlayerService;
@@ -16,8 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public class AvatarDelegate implements FrontControllerDelegate {
-	//private PlayerService playerServ = new PlayerServiceImpl();
-	private AvatarService avatarServ = new AvatarServiceImpl();
+	private AvatarService avatarServ = new AvatarServImpl();
 	private ObjectMapper objMapper = new ObjectMapper();
 
 	@Override
@@ -44,11 +44,11 @@ public class AvatarDelegate implements FrontControllerDelegate {
 	public void get(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String path = (String) req.getAttribute("path");
 		if (path==null || "".equals(path)) {
-			resp.getWriter().write(objMapper.writeValueAsString(avatarServ.viewAllAvatars()));
+			resp.getWriter().write(objMapper.writeValueAsString(avatarServ.findAll()));
 		} else {
 			try {
 				int id = Integer.valueOf(path);
-				Avatar avatar = avatarServ.getAvatar(id);
+				Avatar avatar = avatarServ.findById(id);
 				if (avatar!=null) {
 					resp.getWriter().write(objMapper.writeValueAsString(avatar));
 				} else {
@@ -65,7 +65,7 @@ public class AvatarDelegate implements FrontControllerDelegate {
 		if (path==null || "".equals(path)) {
 			Avatar avatar = objMapper.readValue(req.getInputStream(), Avatar.class);
 			if (avatar!=null) {
-				avatar = avatarServ.addAvatar(avatar);
+				avatar = avatarServ.create(avatar);
 				resp.getWriter().write(objMapper.writeValueAsString(avatar));
 			} else {
 				resp.sendError(400, "The request body was empty.");
@@ -82,14 +82,15 @@ public class AvatarDelegate implements FrontControllerDelegate {
 		} else {
 			try {
 				int id = Integer.valueOf(path);
-				Avatar avatar = avatarServ.getAvatar(id);
+				Avatar avatar = avatarServ.findById(id);
 				if (avatar!=null) {
 					avatar = objMapper.readValue(req.getInputStream(), Avatar.class);
 					
 					try {
 						if (avatar==null) throw new RuntimeException();
 						if (avatar.getId()==id) {
-							avatar = avatarServ.editAvatar(avatar);
+							avatarServ.update(avatar);
+							avatar = avatarServ.findById(id);
 							resp.getWriter().write(objMapper.writeValueAsString(avatar));
 						} else {
 							resp.sendError(409, "The ID in the URI did not match the ID in the body.");
