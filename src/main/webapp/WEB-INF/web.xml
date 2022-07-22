@@ -6,6 +6,7 @@
   <servlet>
   	<servlet-name>Avatar</servlet-name>
   	<servlet-class>com.revature.p1.web.servlets.AvatarServlet</servlet-class>
+  	<load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
   	<servlet-name>Avatar</servlet-name>
