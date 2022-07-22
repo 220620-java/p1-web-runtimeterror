@@ -1,5 +1,6 @@
 package com.revature.p1.web.services;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import com.revature.p1.web.data.AvatarDAO;
@@ -11,7 +12,7 @@ public class AvatarServImpl implements AvatarService {
 	private static AvatarDAO avatarDao = new AvatarORM();
 
 	@Override
-	public Avatar create(Avatar avatar) {
+	public Avatar create(Avatar avatar) throws SQLException {
 		
 		return avatarDao.create(avatar);
 	}
