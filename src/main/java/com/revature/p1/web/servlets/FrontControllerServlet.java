@@ -6,6 +6,7 @@ import org.apache.catalina.servlets.DefaultServlet;
 
 import com.revature.p1.web.delegates.FrontControllerDelegate;
 import com.revature.p1.web.delegates.RequestMapper;
+import com.revature.p1.web.exceptions.UsernameAlreadyExistsException;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,7 +21,18 @@ public class FrontControllerServlet extends DefaultServlet {
 		
 		// if the URI has an appropriate delegate
 		if (delegate != null) {
-			delegate.handle(req, resp);
+			try {
+				delegate.handle(req, resp);
+			} catch (ServletException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (UsernameAlreadyExistsException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} else {
 			resp.sendError(404);
 		}
