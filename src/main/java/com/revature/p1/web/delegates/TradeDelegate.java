@@ -69,14 +69,14 @@ public class TradeDelegate implements FrontControllerDelegate {
 				resp.sendError(400, "The request body was empty.");
 			}
 		} else {
-			resp.sendError(400, "Cannot POST to this URI. Try sending the request to /pets.");
+			resp.sendError(400, "Cannot POST to this URI. Try sending the request to /trades.");
 		}
 	}
 		
 	public void put(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String path = (String) req.getAttribute("path");
 		if (path==null || "".equals(path)) {
-			resp.sendError(400, "Cannot PUT to this URI. Try sending the request to /pets/{id}.");
+			resp.sendError(400, "Cannot PUT to this URI. Try sending the request to /trades/{id}.");
 		} else {
 			try {
 				int id = Integer.valueOf(path);
