@@ -36,6 +36,7 @@ public class PlayerServImpl implements PlayerService {
 		} else {
 			throw new UsernameAlreadyExistsException(null, null, null);
 		}
+		
 	}
 
 	@Override
