@@ -1,5 +1,8 @@
 package com.revature.p1.web.exceptions;
 
-public class UsernameAlreadyExistsException {
+import java.sql.SQLException;
+
+public class UsernameAlreadyExistsException extends Exception {
+	if ()
 
 }

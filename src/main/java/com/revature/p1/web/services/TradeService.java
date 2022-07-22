@@ -2,10 +2,11 @@ package com.revature.p1.web.services;
 
 import java.util.List;
 
+import com.revature.p1.web.exceptions.TradeAlreadyExistsException;
 import com.revature.p1.web.models.Trade;
 
 public interface TradeService {
-public Trade create(Trade trade);
+public Trade create(Trade trade) throws TradeAlreadyExistsException;
 	
 	public Trade findById(int id);
 	

@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.revature.p1.web.models.Trade;
 import com.revature.p1.web.data.TradeDAO;
+import com.revature.p1.web.exceptions.TradeAlreadyExistsException;
 import com.revature.p1.web.orm.TradeORM;
 
 public class TradeServImpl implements TradeService {
@@ -14,13 +15,14 @@ public class TradeServImpl implements TradeService {
 	@Override
 	public Trade create(Trade trade) throws TradeAlreadyExistsException {
 		// TODO Auto-generated method stub
-		try {
-			return tradeDao.create(trade);
-		} catch (SQLException e) {
-			//**********************************************************
-			//throw new UsernameAlreadyExistsException();
-			//**********************************************************
-			//must not forget to uncomment this when its added!
+		/*
+		 * try { return tradeDao.create(trade); } catch (SQLException e) { throw new
+		 * TradeAlreadyExistsException(); } return trade;
+		 */
+		
+		trade = tradeDao.create(trade);
+		if(trade == null) {
+			throw new TradeAlreadyExistsException();
 		}
 		return trade;
 	}

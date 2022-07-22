@@ -5,6 +5,8 @@ import java.util.List;
 import com.revature.p1.web.models.Player;
 
 public interface PlayerDAO extends DataAccessObject<Player>{
+	
+	
 	public Player findByUsername(String username);
 	
 	public Player create(Player player);
