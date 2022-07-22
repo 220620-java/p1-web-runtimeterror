@@ -5,13 +5,8 @@ import java.io.IOException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import com.revature.p1.web.models.Avatar;
-import com.revature.p1.web.models.Player;
 import com.revature.p1.web.services.AvatarServImpl;
 import com.revature.p1.web.services.AvatarService;
-import com.revature.p1.web.services.AvatarServiceImpl;
-import com.revature.p1.web.services.PlayerService;
-import com.revature.p1.web.services.PlayerServiceImpl;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

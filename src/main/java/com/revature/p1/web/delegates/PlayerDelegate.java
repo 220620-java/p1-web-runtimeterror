@@ -4,7 +4,9 @@ import java.io.IOException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
+import com.revature.p1.web.exceptions.UsernameAlreadyExistsException;
 import com.revature.p1.web.models.Player;
+import com.revature.p1.web.services.PlayerServImpl;
 import com.revature.p1.web.services.PlayerService;
 import com.revature.p1.web.services.PlayerServiceImpl;
 
@@ -13,8 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public class PlayerDelegate implements FrontControllerDelegate {
-	private PlayerService playerServ = new PlayerServiceImpl();
-	//private AvatarService avatarServ = new AvatarServiceImpl();
+	private PlayerService playerServ = new PlayerServImpl();
 	private ObjectMapper objMapper = new ObjectMapper();
 
 	@Override
@@ -41,11 +42,11 @@ public class PlayerDelegate implements FrontControllerDelegate {
 	public void get(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String path = (String) req.getAttribute("path");
 		if (path==null || "".equals(path)) {
-			resp.getWriter().write(objMapper.writeValueAsString(playerServ.viewAllPlayers()));
+			resp.getWriter().write(objMapper.writeValueAsString(playerServ.findAll()));
 		} else {
 			try {
 				int id = Integer.valueOf(path);
-				Player player = playerServ.getPlayer(id);
+				Player player = playerServ.findById(id);
 				if (player!=null) {
 					resp.getWriter().write(objMapper.writeValueAsString(player));
 				} else {
@@ -57,12 +58,12 @@ public class PlayerDelegate implements FrontControllerDelegate {
 		}
 	}
 
-	public void post(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	public void post(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, UsernameAlreadyExistsException {
 		String path = (String) req.getAttribute("path");
 		if (path==null || "".equals(path)) {
 			Player player = objMapper.readValue(req.getInputStream(), Player.class);
 			if (player!=null) {
-				player = playerServ.addPlayer(player);
+				player = playerServ.create(player);
 				resp.getWriter().write(objMapper.writeValueAsString(player));
 			} else {
 				resp.sendError(400, "The request body was empty.");
@@ -79,14 +80,14 @@ public class PlayerDelegate implements FrontControllerDelegate {
 		} else {
 			try {
 				int id = Integer.valueOf(path);
-				Player player = playerServ.getPlayer(id);
+				Player player = playerServ.findById(id);
 				if (player!=null) {
 					player = objMapper.readValue(req.getInputStream(), Player.class);
 					
 					try {
 						if (player==null) throw new RuntimeException();
 						if (player.getId()==id) {
-							player = playerServ.editPlayer(player);
+							playerServ.update(player);
 							resp.getWriter().write(objMapper.writeValueAsString(player));
 						} else {
 							resp.sendError(409, "The ID in the URI did not match the ID in the body.");
