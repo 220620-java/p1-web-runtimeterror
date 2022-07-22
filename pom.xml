@@ -30,6 +30,18 @@
 			<scope>test</scope>
 		</dependency>
   </dependencies>
+  <dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>42.4.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.revature.orm</groupId>
+			<artifactId>rev-orm</artifactId>
+			<version>0.0.1</version>
+		</dependency>
+	</dependencies>
+
   
   <build>
 		<!-- this will set the context path for your http requests -->
