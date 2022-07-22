@@ -1,4 +1,4 @@
-package com.revature.p1.web.service;
+package com.revature.p1.web.services;
 
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,7 +16,7 @@ import com.revature.p1.web.services.AvatarServImpl;
 import com.revature.p1.web.services.AvatarService;
 
 @ExtendWith(MockitoExtension.class)
-public class AvatarTest {
+public class AvatarServicTest {
 	
 	@InjectMocks
 	private AvatarService avatarServ = new AvatarServImpl();
