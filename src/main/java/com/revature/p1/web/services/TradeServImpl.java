@@ -22,7 +22,7 @@ public class TradeServImpl implements TradeService {
 		
 		trade = tradeDao.create(trade);
 		if(trade == null) {
-			throw new TradeAlreadyExistsException();
+			throw new TradeAlreadyExistsException(null, null, null);
 		}
 		return trade;
 	}

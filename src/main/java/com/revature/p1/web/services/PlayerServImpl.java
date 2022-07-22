@@ -34,7 +34,7 @@ public class PlayerServImpl implements PlayerService {
 		if(playerDao.findByUsername(player.getUsername()).equals(null)){
 			return player;
 		} else {
-			throw new UsernameAlreadyExistsException();
+			throw new UsernameAlreadyExistsException(null, null, null);
 		}
 	}
 
