@@ -45,20 +45,6 @@ public class AvatarServlet extends HttpServlet {
 		}
 		
 		PrintWriter writer = resp.getWriter();
-		
-		if (language==null) language="";
-		switch (language) {
-		case "en":
-			writer.write("Hello, " + requestBody + "! :)");
-			break;
-		case "fr":
-			writer.write("Bonjour, " + requestBody + "! :)");
-			break;
-		case "es":
-			writer.write("Hola, " + requestBody + "! :)");
-			break;
-		default:
-			writer.write(requestBody + "! :)");
-		}
+		writer.write(requestBody + "! :)");
 	}
 }
