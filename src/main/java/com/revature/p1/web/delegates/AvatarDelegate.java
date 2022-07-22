@@ -1,6 +1,7 @@
 package com.revature.p1.web.delegates;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
@@ -25,7 +26,18 @@ public class AvatarDelegate implements FrontControllerDelegate {
 			get(req, resp);
 			break;
 		case "POST":
-			post(req, resp);
+			try {
+				post(req, resp);
+			} catch (ServletException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			break;
 		case "PUT":
 			put(req, resp);
@@ -55,7 +67,7 @@ public class AvatarDelegate implements FrontControllerDelegate {
 		}
 	}
 
-	public void post(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	public void post(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
 		String path = (String) req.getAttribute("path");
 		if (path==null || "".equals(path)) {
 			Avatar avatar = objMapper.readValue(req.getInputStream(), Avatar.class);

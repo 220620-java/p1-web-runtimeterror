@@ -18,8 +18,8 @@ public class RequestMapper {
 			
 			// add each delegate with its path
 			delegateMap.put("players", new PlayerDelegate());
-			//delegateMap.put("avatars", new AvatarDelegate());
-			//delegateMap.put("trades", new TradeDelegate());
+			delegateMap.put("avatars", new AvatarDelegate());
+			delegateMap.put("trades", new TradeDelegate());
 		}
 		
 		/**

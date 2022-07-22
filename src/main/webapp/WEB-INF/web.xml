@@ -4,11 +4,13 @@
   
   <!-- front controller servlet -->
   <servlet>
-  	<servlet-name>Front</servlet-name>
-  	<servlet-class>com.revature.p1.web.servlets.FrontControllerServlet</servlet-class>
+  	<servlet-name>Avatar</servlet-name>
+  	<servlet-class>com.revature.p1.web.servlets.AvatarServlet</servlet-class>
+  	<load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>Front</servlet-name>
-  	<url-pattern>/</url-pattern>
+  	<servlet-name>Avatar</servlet-name>
+  	<url-pattern>/avatars</url-pattern>
   </servlet-mapping>
+  
 </web-app>

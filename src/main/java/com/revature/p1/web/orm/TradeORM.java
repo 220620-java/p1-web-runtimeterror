@@ -23,7 +23,7 @@ public class TradeORM implements TradeDAO {
 			tx.execute();
 			tx.commit();
 			int id = (int) tx.getGeneratedKeys().get(0);
-			Trade.setId(id);
+			trade.setId(id);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

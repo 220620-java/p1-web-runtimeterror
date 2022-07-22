@@ -1,4 +1,4 @@
-package com.revature.p1.web.data.orm;
+package com.revature.p1.web.orm;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -10,11 +10,13 @@ import com.revature.orm.ORMTransaction;
 import com.revature.orm.session.SessionImpl;
 import com.revature.p1.web.data.AvatarDAO;
 import com.revature.p1.web.models.Avatar;
+import com.revature.p1.web.models.Trade;
 
 public class AvatarORM implements AvatarDAO{
 
 	@Override
 	public Avatar create(Avatar avatar) throws SQLException{
+		ORMTransaction<Avatar> tx = null;
 		try {
 			ORMSession session = new SessionImpl();
 			tx = session.beginTransaction(Avatar.class);
